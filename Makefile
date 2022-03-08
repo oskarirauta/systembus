@@ -17,9 +17,9 @@ SHARED_OBJS:=objs/common.o objs/log.o
 LIBS:=
 
 # for cross-building:
-#UBUS_LIBS:=-lubox -lblobmsg_json -lubus -luci
+UBUS_LIBS:=-lubox -lblobmsg_json -lubus -luci
 # for native building:
-UBUS_LIBS:=/usr/lib/libubox.a /usr/lib/libblobmsg_json.a /usr/lib/libuci.a /usr/lib/libubus.a
+#UBUS_LIBS:=/usr/lib/libubox.a /usr/lib/libblobmsg_json.a /usr/lib/libuci.a /usr/lib/libubus.a
 
 JSON_LIBS:=-ljsoncpp
 
