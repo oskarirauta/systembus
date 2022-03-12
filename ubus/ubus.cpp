@@ -13,7 +13,10 @@
 
 std::string ubus_socket = "";
 struct ubus_context *ctx;
-//struct blob_buf b;
+
+#ifndef b
+struct blob_buf b;
+#endif
 
 static const struct ubus_method cpu_methods[] = {
 	{ .name = "get", .handler = systembus_cpu_get, .policy = cpu_policy, .n_policy = cpu_policy_size()},
