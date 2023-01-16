@@ -23,7 +23,7 @@ void info_t::update_boot_variant(void) {
 		this -> boot_variant = this -> get_boot_variant();
 		if ( this -> boot_variant == "error: boot_entry variable missing from /proc/cmdline" ) {
 			this -> variant_found = true;
-		} else if ( this -> boot_variant.length() >= 6 && common::to_lower(boot_variant).substr(0,6) == "error:" )
+		} else if ( this -> boot_variant.length() >= 6 && common::to_lower(boot_variant).substr(0,6) == "error:" ) {
 			this -> variant_found = false;
 		} else { this -> variant_found = true; }
 	}
