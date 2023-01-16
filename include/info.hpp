@@ -20,7 +20,7 @@ class info_t {
 		std::string parse_release_name(struct uci_package *p);
 		std::string get_release_name(void);
 		std::string get_boot_variant(void);
-		std::string update_boot_variant(void);
+		void update_boot_variant(void);
 };
 
 extern info_t *info_data;
