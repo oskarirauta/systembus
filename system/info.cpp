@@ -101,7 +101,7 @@ std::string info_t::get_boot_variant(void) {
 		res == "kernel command line is empty???" ||
 		res == "failed to read /proc/cmdline - is procfs mounted?" ||
 		res == "unknown error" ) {
-		res = "error: " + ( res == "kernel command line is missing boot_entry variable" ? "boot_entry variable missing from /proc/cmdline" : (
+		res = std::string("error: ") + ( res == "kernel command line is missing boot_entry variable" ? "boot_entry variable missing from /proc/cmdline" : (
 			res == "kernel command line is empty???" ? "parsing failed" : " can't read /proc/boot_entry"));
 	}
 
