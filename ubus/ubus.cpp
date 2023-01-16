@@ -68,6 +68,7 @@ static const struct ubus_method info_methods[] = {
 	{ .name = "list", .handler = systembus_info_list },
 	{ .name = "systembus_loaded", .handler = systembus_info_is_enabled },
         { .name = "release_name", .handler = systembus_info_release_name },
+	{ .name = "boot_variant", .handler = systembus_info_boot_variant },
 };
 
 static struct ubus_object_type info_object_type = {

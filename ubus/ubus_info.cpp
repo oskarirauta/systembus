@@ -46,3 +46,16 @@ int systembus_info_release_name(struct ubus_context *ctx, struct ubus_object *ob
 	ubus_send_reply(ctx, req, b.head);
 	return 0;
 }
+
+int systembus_info_boot_variant(struct ubus_context *ctx, struct ubus_object *obj,
+		struct ubus_request_data *req, const char *method,
+		struct blob_attr *msg) {
+
+	log::debug << APP_NAME << ": ubus call info::boot_variant received" << std::endl;
+	std::lock_guard<std::mutex> guard(mutex.info);
+
+	blob_buf_init(&b, 0);
+	blobmsg_add_string(&b, "boot_variant", info_data -> boot_variant.c_str());
+	ubus_send_reply(ctx, req, b.head);
+	return 0;
+}
