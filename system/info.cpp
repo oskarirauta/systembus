@@ -1,3 +1,6 @@
+#include <fstream>
+#include <string>
+
 #include "common.hpp"
 #include "mutex.hpp"
 #include "info.hpp"
