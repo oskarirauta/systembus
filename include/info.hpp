@@ -9,7 +9,7 @@ extern "C" {
 class info_t {
 	public:
 		std::string release_name;
-		std::string boot_variant;
+		std::string boot_variant = "unknown";
 
 		info_t(void);
 		void update(void);
