@@ -94,7 +94,7 @@ std::string info_t::get_boot_variant(void) {
 	if ( res.empty()) {
 		res == "unknown error";
 	} else {
-		res = common::trim(ret, "\r\n");
+		res = common::trim(res, "\r\n");
 	}
 
 	if ( res == "kernel command line is missing boot_entry variable" ||
