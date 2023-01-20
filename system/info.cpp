@@ -63,13 +63,18 @@ std::string info_t::get_release_name(void) {
 
 void info_t::update_boot_variant(void) {
 
-	if ( !this -> boot_variant.empty() && this -> boot_variant != "unknown" && this -> boot_variant != "unknown error" )
+	if ( !this -> boot_variant.empty() &&
+		this -> boot_variant != "unknown" &&
+		this -> boot_variant != "unknown error" &&
+		this -> boot_variant != "error: boot_variant.ko module not loaded" )
 		return;
 
 	std::ifstream fd("/proc/boot_variant");
 
-	if ( !fd.good())
-		return "boot_variant.ko module not loaded";
+	if ( !fd.good()) {
+		this -> boot_variant = "error: boot_variant.ko module not loaded";
+		return;
+	}
 
 	std::string res;
 	
