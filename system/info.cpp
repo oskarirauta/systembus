@@ -16,13 +16,6 @@ void info_t::update(void) {
 	this -> update_boot_variant();
 }
 
-void info_t::update_boot_variant(void) {
-
-	if ( this -> boot_variant.empty())
-		this -> boot_variant = this -> get_boot_variant();
-
-}
-
 std::string info_t::parse_release_name(struct uci_package *p) {
 
 	struct uci_element *e;
@@ -68,7 +61,10 @@ std::string info_t::get_release_name(void) {
 	return ret;
 }
 
-std::string info_t::get_boot_variant(void) {
+void info_t::update_boot_variant(void) {
+
+	if ( !this -> boot_variant.empty() && this -> boot_variant != "unknown" && this -> boot_variant != "unknown error" )
+		return;
 
 	std::ifstream fd("/proc/boot_variant");
 
@@ -90,7 +86,7 @@ std::string info_t::get_boot_variant(void) {
 	else
 		res = common::trim(res, "\r\n");
 
-	return res;
+	this -> boot_variant = res;
 }
 
 info_t *info_data;
