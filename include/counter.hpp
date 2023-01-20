@@ -10,7 +10,7 @@ namespace Counter {
 
 	struct Cycles {
 		static const int security = 30;
-		static const int info = 20;
+		static const int info = 25;
 		static const int app_settings = 35;
 	};
 
