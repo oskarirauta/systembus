@@ -18,16 +18,9 @@ void info_t::update(void) {
 
 void info_t::update_boot_variant(void) {
 
-	if ( !this -> variant_found ) {
-
+	if ( this -> boot_variant.empty())
 		this -> boot_variant = this -> get_boot_variant();
 
-		if ( this -> boot_variant == "error: boot_entry variable missing from /proc/cmdline" )
-			this -> variant_found = true;
-		else if ( this -> boot_variant.length() >= 6 && common::to_lower(boot_variant).substr(0,6) == "error:" )
-			this -> variant_found = false;
-		else this -> variant_found = true;
-	}
 }
 
 std::string info_t::parse_release_name(struct uci_package *p) {
@@ -77,10 +70,10 @@ std::string info_t::get_release_name(void) {
 
 std::string info_t::get_boot_variant(void) {
 
-	std::ifstream fd("/proc/boot_entry");
+	std::ifstream fd("/proc/boot_variant");
 
 	if ( !fd.good())
-		return "boot_entry.ko module not loaded";
+		return "boot_variant.ko module not loaded";
 
 	std::string res;
 	
@@ -92,19 +85,10 @@ std::string info_t::get_boot_variant(void) {
 
 	fd.close();
 
-	if ( res.empty()) {
+	if ( res.empty())
 		res == "unknown error";
-	} else {
+	else
 		res = common::trim(res, "\r\n");
-	}
-
-	if ( res == "kernel command line is missing boot_entry variable" ||
-		res == "kernel command line is empty???" ||
-		res == "failed to read /proc/cmdline - is procfs mounted?" ||
-		res == "unknown error" ) {
-		res = std::string("error: ") + ( res == "kernel command line is missing boot_entry variable" ? "boot_entry variable missing from /proc/cmdline" : (
-			res == "kernel command line is empty???" ? "parsing failed" : " can't read /proc/boot_entry"));
-	}
 
 	return res;
 }

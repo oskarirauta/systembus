@@ -9,13 +9,12 @@ extern "C" {
 class info_t {
 	public:
 		std::string release_name;
-		std::string boot_variant = "unknown";
+		std::string boot_variant = "";
 
 		info_t(void);
 		void update(void);
 
 	private:
-		bool variant_found = false;
 
 		std::string parse_release_name(struct uci_package *p);
 		std::string get_release_name(void);
