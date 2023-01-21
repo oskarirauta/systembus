@@ -66,7 +66,7 @@ std::string info_t::get_release_name(void) {
 void info_t::update_boot_variant(void) {
 
 	kcmdline *kcmd = new kcmdline;
-	for ( const auto& [key,  value] = kcmd -> pairs())
+	for ( const auto& [key,  value] : kcmd -> pairs())
 		if ( common::to_lower(key) == "boot_variant" ) {
 			this -> boot_variant = value.empty() ? "unknown" : value;
 			break;
