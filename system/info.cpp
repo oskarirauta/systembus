@@ -3,6 +3,7 @@
 
 #include "common.hpp"
 #include "mutex.hpp"
+#include "kcmdline.hpp"
 #include "info.hpp"
 
 info_t::info_t(void) {
@@ -12,8 +13,9 @@ info_t::info_t(void) {
 
 void info_t::update(void) {
 
+	if ( this -> boot_variant.empty())
+		this -> update_boot_variant();
 	this -> release_name = this -> get_release_name();
-	this -> update_boot_variant();
 }
 
 std::string info_t::parse_release_name(struct uci_package *p) {
@@ -63,35 +65,14 @@ std::string info_t::get_release_name(void) {
 
 void info_t::update_boot_variant(void) {
 
-	if ( !this -> boot_variant.empty() &&
-		this -> boot_variant != "unknown" &&
-		this -> boot_variant != "unknown error" &&
-		this -> boot_variant != "error: boot_variant.ko module not loaded" )
-		return;
-
-	std::ifstream fd("/proc/boot_variant");
-
-	if ( !fd.good()) {
-		this -> boot_variant = "error: boot_variant.ko module not loaded";
-		return;
-	}
-
-	std::string res;
-	
-	while ( std::getline(fd, res)) {
-		if ( !res.empty()) {
+	kcmdline *kcmd = new kcmdline;
+	for ( const auto& [key,  value] = kcmd -> pairs())
+		if ( common::to_lower(key) == "boot_variant" ) {
+			this -> boot_variant = value.empty() ? "unknown" : value;
 			break;
 		}
-	}
 
-	fd.close();
-
-	if ( res.empty())
-		res == "unknown error";
-	else
-		res = common::trim(res, "\r\n");
-
-	this -> boot_variant = res;
+	free(kcmd);
 }
 
 info_t *info_data;
