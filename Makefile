@@ -5,6 +5,7 @@ CXXFLAGS?=--std=c++17
 #-ggdb
 
 OBJS:= \
+	objs/kcmdline.o \
 	objs/process.o objs/childproc.o \
 	objs/cpu.o objs/security.o objs/info.o \
 	objs/ubus_cpu.o objs/ubus_security.o objs/ubus_info.o \
@@ -54,6 +55,9 @@ objs/security.o: system/security.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
 
 objs/info.o: system/info.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
+
+objs/kcmdline.o: shared/kcmdline.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
 
 objs/process.o: system/process.cpp
