@@ -56,7 +56,7 @@ int systembus_info_boot_variant(struct ubus_context *ctx, struct ubus_object *ob
 	std::lock_guard<std::mutex> guard(mutex.info);
 
 	blob_buf_init(&b, 0);
-	blobmsg_add_string(&b, "boot_variant", info_data -> boot_variant.empty ? "" : info_data -> boot_variant.c_str());
+	blobmsg_add_string(&b, "boot_variant", info_data -> boot_variant.empty() ? "" : info_data -> boot_variant.c_str());
 	ubus_send_reply(ctx, req, b.head);
 	return 0;
 }
