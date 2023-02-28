@@ -22,8 +22,6 @@ bool cpu_t::read_cputemp() {
 	if ( !std::filesystem::is_directory(basepath))
 		return false;
 
-	std::cout << "iterating in " << basepath << std::endl;
-
 	for (auto const& dir_entry : std::filesystem::directory_iterator{basepath}) {
 
 		if ( dir_entry.path().string().rfind(basepath.string() + "/thermal_", 0) != 0 )
@@ -74,18 +72,18 @@ bool cpu_t::read_cputemp() {
 	return success;
 }
 
-std::string cpu_t::cpu_temp(void) {
+int cpu_t::cpu_temp(void) {
 
 	long int total = 0;
 	char cnt = 0;
 
 	if ( this -> temp_arr.empty())
-		return "0";
+		return 0;
 
 	for ( int temp : this -> temp_arr ) {
 		cnt++;
 		total += temp;
 	}
 
-	return std::to_string(cnt > 0 ? ( total / cnt ) : total);
+	return cnt > 0 ? ( total / cnt ) : total;
 }

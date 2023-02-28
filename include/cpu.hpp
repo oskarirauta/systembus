@@ -41,7 +41,7 @@ class cpu_t {
 		cpu_t();
 		void update(void);
 		int indexOf(std::string name);
-		std::string cpu_temp(void);
+		int cpu_temp(void);
 };
 
 extern cpu_t *cpu_data;

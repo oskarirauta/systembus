@@ -22,6 +22,8 @@ static const struct ubus_method cpu_methods[] = {
 	{ .name = "get", .handler = systembus_cpu_get, .policy = cpu_policy, .n_policy = cpu_policy_size()},
 	{ .name = "count", .handler = systembus_cpu_count },
 	{ .name = "load", .handler = systembus_cpu_load },
+	{ .name = "temp", .handler = systembus_cpu_temp },
+	{ .name = "temperature", .handler = systembus_cpu_temp },
 	{ .name = "all", .handler = systembus_cpu_all },
 	{ .name = "list", .handler = systembus_cpu_list },
 };

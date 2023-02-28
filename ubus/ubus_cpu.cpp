@@ -130,6 +130,19 @@ int systembus_cpu_load(struct ubus_context *ctx, struct ubus_object *obj,
 	return 0;
 }
 
+int systembus_cpu_temp(struct ubus_context *ctx, struct ubus_object *obj,
+		  struct ubus_request_data *req, const char *method,
+		  struct blob_attr *msg) {
+
+	log::debug << APP_NAME << ": ubus call cpu::temp received" << std::endl;
+
+	blob_buf_init(&b, 0);
+	std::lock_guard<std::mutex> guard(mutex.cpu);
+	blobmsg_add_u16(&b, "temperature", cpu_data -> cpu_temp());
+	ubus_send_reply(ctx, req, b.head);
+	return 0;
+}
+
 int systembus_cpu_all(struct ubus_context *ctx, struct ubus_object *obj,
 		struct ubus_request_data *req, const char *method,
 		struct blob_attr *msg) {
@@ -140,6 +153,7 @@ int systembus_cpu_all(struct ubus_context *ctx, struct ubus_object *obj,
 	std::lock_guard<std::mutex> guard(mutex.cpu);
 	blobmsg_add_u16(&b, "count", cpu_data -> count);
 	blobmsg_add_u16(&b, "load", static_cast<int>(cpu_data -> load));
+	blobmsg_add_u16(&b, "temperature", cpu_data -> cpu_temp());
 
 	std::for_each(std::begin(cpu_data -> nodes), std::end(cpu_data -> nodes), [](cpu_node& node) {
 		void *cookie = blobmsg_open_table(&b, node.name.c_str());
