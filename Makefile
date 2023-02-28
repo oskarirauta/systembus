@@ -7,7 +7,7 @@ CXXFLAGS?=--std=c++17
 OBJS:= \
 	objs/kcmdline.o \
 	objs/process.o objs/childproc.o \
-	objs/cpu.o objs/security.o objs/info.o \
+	objs/cpu.o objs/cpu_temp.o objs/security.o objs/info.o \
 	objs/ubus_cpu.o objs/ubus_security.o objs/ubus_info.o \
 	objs/ubus.o \
 	objs/counter.o objs/mutex.o objs/loop.o \
@@ -49,6 +49,9 @@ objs/log.o: shared/log.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
 
 objs/cpu.o: system/cpu.cpp
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
+
+objs/cpu_temp.o: system/cpu_temp.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
 
 objs/security.o: system/security.cpp

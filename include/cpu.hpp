@@ -25,6 +25,7 @@ class cpu_t {
 
 		void read_cpustat(tck_t *stat);
 		void calculate_cpuload(tck_t *prev, tck_t *curr);
+		bool read_cputemp(void);
 
 		uint64_t idle_ticks(tck_t *stat);
 		uint64_t total_ticks(tck_t *stat);
@@ -35,10 +36,12 @@ class cpu_t {
 		float load;
 
 		std::vector<cpu_node> nodes;
+		std::vector<int> temp_arr;
 
 		cpu_t();
 		void update(void);
 		int indexOf(std::string name);
+		std::string cpu_temp(void);
 };
 
 extern cpu_t *cpu_data;

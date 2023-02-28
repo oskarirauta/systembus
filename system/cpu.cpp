@@ -107,6 +107,7 @@ void cpu_t::update(void) {
 	this -> read_cpustat(this -> tcks[this -> index]);
 	this -> calculate_cpuload(this -> tcks[this -> index^1], this -> tcks[this -> index]);
 	this -> index ^= 1;
+	this -> read_cputemp();
 }
 
 int cpu_t::indexOf(std::string name) {
