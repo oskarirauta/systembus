@@ -8,12 +8,11 @@
 #include <filesystem>
 #include <exception>
 
+#include "constants.hpp"
 #include "common.hpp"
 #include "mutex.hpp"
 #include "log.hpp"
 #include "cpu.hpp"
-
-#define MAX_TEMP_VALUES 3
 
 bool cpu_t::read_cputemp() {
 
