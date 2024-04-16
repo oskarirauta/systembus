@@ -33,3 +33,6 @@ systembus
 *.exe
 *.out
 *.app
+
+objs
+systembus

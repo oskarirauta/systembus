@@ -1,19 +1,12 @@
 #pragma once
 
-#include "ubus.hpp"
+#include <string>
+#include "uptime.hpp"
 
-int systembus_info_list(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
+extern uptime_t* uptime;
 
-int systembus_info_is_enabled(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
-
-int systembus_info_release_name(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
-
-int systembus_info_boot_variant(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
+int ubus_info_list(const std::string& method, const JSON& req, JSON& res);
+int ubus_info_loaded(const std::string& method, const JSON& req, JSON& res);
+int ubus_info_release(const std::string& method, const JSON& req, JSON& res);
+int ubus_info_variant(const std::string& method, const JSON& req, JSON& res);
+int ubus_info_uptime(const std::string& method, const JSON& req, JSON& res);

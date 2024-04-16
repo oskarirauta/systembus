@@ -1,39 +1,14 @@
 #pragma once
 
-#include "ubus.hpp"
+#include <string>
+#include "json.hpp"
+#include "cpu/cpu.hpp"
 
-enum {
-	CPU_ID,
-	CPU_NAME,
-	CPU_CMD,
-	CPU_FIELDS,
-	__GET_CPU_ARGS_MAX
-};
+extern cpu_t* cpu;
 
-extern const struct blobmsg_policy cpu_policy[];
-
-int cpu_policy_size(void);
-
-int systembus_cpu_get(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
-
-int systembus_cpu_count(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
-
-int systembus_cpu_load(struct ubus_context *ctx, struct ubus_object *obj,
-		  struct ubus_request_data *req, const char *method,
-		  struct blob_attr *msg);
-
-int systembus_cpu_temp(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
-
-int systembus_cpu_all(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
-
-int systembus_cpu_list(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
+int ubus_cpu_get(const std::string& method, const JSON& req, JSON& res);
+int ubus_cpu_count(const std::string& method, const JSON& req, JSON& res);
+int ubus_cpu_load(const std::string& method, const JSON& req, JSON& res);
+int ubus_cpu_temp(const std::string& method, const JSON& req, JSON& res);
+int ubus_cpu_all(const std::string& method, const JSON& req, JSON& res);
+int ubus_cpu_list(const std::string& method, const JSON& req, JSON& res);

@@ -1,0 +1,30 @@
+[submodule "bandwidth"]
+	path = bandwidth
+	url = https://github.com/oskarirauta/bandwidth_cpp.git
+[submodule "common"]
+	path = common
+	url = https://github.com/oskarirauta/common_cpp.git
+[submodule "cpu"]
+	path = cpu
+	url = https://github.com/oskarirauta/cpu_cpp.git
+[submodule "json"]
+	path = json
+	url = https://github.com/oskarirauta/json_cpp.git
+[submodule "kernel"]
+	path = kernel
+	url = https://github.com/oskarirauta/kernel_cpp.git
+[submodule "logger"]
+	path = logger
+	url = https://github.com/oskarirauta/logger_cpp.git
+[submodule "throws"]
+	path = throws
+	url = https://github.com/oskarirauta/throws_cpp.git
+[submodule "ubus"]
+	path = ubus
+	url = https://github.com/oskarirauta/ubus_cpp.git
+[submodule "uptime"]
+	path = uptime
+	url = https://github.com/oskarirauta/uptime_cpp.git
+[submodule "usage"]
+	path = usage
+	url = https://github.com/oskarirauta/usage_cpp.git

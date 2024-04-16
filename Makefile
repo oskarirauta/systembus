@@ -1,94 +1,55 @@
-all: systembus
+all: world
 
 CXX?=g++
-CXXFLAGS?=--std=c++17
-#-ggdb
+CXXFLAGS?=--std=c++17 -Wall -fPIC -g
+LDFLAGS?=-L/lib -L/usr/lib
+
+INCLUDES+= -I./include
 
 OBJS:= \
-	objs/kcmdline.o \
-	objs/process.o objs/childproc.o \
-	objs/cpu.o objs/cpu_temp.o objs/security.o objs/info.o \
-	objs/ubus_cpu.o objs/ubus_security.o objs/ubus_info.o \
-	objs/ubus.o \
-	objs/counter.o objs/mutex.o objs/loop.o \
-	objs/signal.o objs/app.o objs/main.o
+	objs/ubus_cpu.o \
+	objs/ubus_info.o \
+	objs/ubus_security.o \
+	objs/ubus_bandwidth.o \
+	objs/settings.o \
+	objs/main.o
 
-SHARED_OBJS:=objs/common.o objs/log.o
+include common/Makefile.inc
+include throws/Makefile.inc
+include logger/Makefile.inc
+include usage/Makefile.inc
+include json/Makefile.inc
+include cpu/Makefile.inc
+include uptime/Makefile.inc
+include kernel/Makefile.inc
+include bandwidth/Makefile.inc
+include ubus/Makefile.inc
 
-LIBS:=
+world: systembus
 
-# for cross-building:
-UBUS_LIBS:=-lubox -lblobmsg_json -lubus -luci
-# for native building:
-#UBUS_LIBS:=/usr/lib/libubox.a /usr/lib/libblobmsg_json.a /usr/lib/libuci.a /usr/lib/libubus.a
+$(shell mkdir -p objs)
 
-JSON_LIBS:=-ljsoncpp
-
-INCLUDES:=-I./include -I.
-
-ifdef selinux
-LIBS+= -lselinux
-endif
-
-objs/common.o: shared/common.cpp
+objs/ubus_cpu.o: src/ubus_cpu.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
 
-objs/app.o: shared/app.cpp
+objs/ubus_info.o: src/ubus_info.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
 
-objs/mutex.o: shared/mutex.cpp
+objs/ubus_security.o: src/ubus_security.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
 
-objs/signal.o: signal.cpp
+objs/ubus_bandwidth.o: src/ubus_bandwidth.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
 
-objs/counter.o: shared/counter.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/log.o: shared/log.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/cpu.o: system/cpu.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/cpu_temp.o: system/cpu_temp.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/security.o: system/security.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/info.o: system/info.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/kcmdline.o: shared/kcmdline.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/process.o: system/process.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/childproc.o: system/childproc.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/ubus_cpu.o: ubus/ubus_cpu.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/ubus_security.o: ubus/ubus_security.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/ubus_info.o: ubus/ubus_info.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/ubus.o: ubus/ubus.cpp
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
-
-objs/loop.o: loop.cpp
+objs/settings.o: src/settings.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
 
 objs/main.o: main.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c -o $@ $<;
 
-systembus: $(SHARED_OBJS) $(OBJS)
-	$(CXX) $(CXXFLAGS) $(LDFLAGS) $(SHARED_OBJS) $(OBJS) $(LIBS) $(UBUS_LIBS) $(JSON_LIBS) -o $@;
+systembus: $(COMMON_OBJS) $(THROWS_OBJS) $(LOGGER_OBJS) $(USAGE_OBJS) $(UPTIME_OBJS) $(JSON_OBJS) $(CPU_OBJS) $(KERNEL_OBJS) $(UBUS_OBJS) $(BANDWIDTH_OBJS) $(OBJS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) $^ -o $@;
 
+.PHONY: clean
 clean:
-	rm -f objs/** systembus
+	@rm -rf objs systembus

@@ -1,31 +1,12 @@
 #pragma once
 
-#include "ubus.hpp"
+#include <string>
+#include "kernel_info.hpp"
 
-int systembus_sec_list(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
+extern kernel_info* kernel;
 
-int systembus_sec_selinux(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
+int ubus_security_list(const std::string& method, const JSON& req, JSON& res);
+int ubus_security_selinux(const std::string& method, const JSON& req, JSON& res);
+int ubus_security_apparmor(const std::string& method, const JSON& req, JSON& res);
+int ubus_security_seccomp(const std::string& method, const JSON& req, JSON& res);
 
-int systembus_sec_apparmor(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
-
-int systembus_sec_selinux_mode(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
-
-int systembus_sec_apparmor_profiles(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
-
-int systembus_sec_seccomp(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
-
-int systembus_sec_seccomp_actions(struct ubus_context *ctx, struct ubus_object *obj,
-		struct ubus_request_data *req, const char *method,
-		struct blob_attr *msg);
