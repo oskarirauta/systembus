@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
 		.args = { argc, argv },
 		.name = "systembus",
 		.version_title = "\nversion ",
-		.version = "2.2.0",
+		.version = "2.2.1",
 		.author_title = "author ",
 		.author = "Oskari Rauta",
 		.options = {

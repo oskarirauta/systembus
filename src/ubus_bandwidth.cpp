@@ -72,7 +72,7 @@ static JSON get_bm(const bandwidth_t::interface_t& b) {
 	j_rx_rate["g"] = rx_bps.gb;
 	j_rx_rate["value"] = common::to_string(rx_bps.value()) + rx_value_type;
 	j_rx_rate["max"] = common::to_string(rx_max.value()) + rx_max_type;
-	j_rx_rate["percent"] = percent.rx;
+	j_rx_rate["percent"] = (int)percent.rx;
 
 	j_rx["rate"] = j_rx_rate;
 
@@ -93,7 +93,7 @@ static JSON get_bm(const bandwidth_t::interface_t& b) {
 	j_tx_rate["g"] = tx_bps.gb;
 	j_tx_rate["value"] = common::to_string(tx_bps.value()) + tx_value_type;
 	j_tx_rate["max"] = common::to_string(tx_max.value()) + tx_max_type;
-	j_tx_rate["percent"] = percent.tx;
+	j_tx_rate["percent"] = (int)percent.tx;
 
 	j_tx["rate"] = j_tx_rate;
 
